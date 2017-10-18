@@ -202,7 +202,7 @@
 					}
 					
 					$.ajax({
-						url: "http://192.168.0.70/confInicial",
+						url: "http://192.168.4.1/confInicial",
 						dataType: 'json',
 						data: {ssid:ssid, pass:pass, ip: IP, nm:NM, gw:GW},
 						success: function(data){
@@ -266,7 +266,7 @@
 
 		function cargarRedes(){
 			$.ajax({
-				url: "http://192.168.0.70/redes",
+				url: "http://192.168.4.1/redes",
 				dataType: 'json',
 				success: function(data){
 					var icon;
