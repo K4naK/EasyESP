@@ -38,7 +38,7 @@
 			<a href="#" class="brand-logo center truncate">Configuración Inicial</a>
 		</div>
 	</nav>
-	<div class="container">
+	<div class="container" id="ConfigDivNetwork">
 		<div class="row">
 			<div class="switch col s12 m12 l4 xl4 center-align">
 				<p>Tipo de Busqueda Wifi</p>
@@ -192,19 +192,27 @@
 					//$("#ConfigImgRadio").show();
 					var ssid = ($("#ConfigCheckAutoSSID").prop("checked"))?$("#ConfigDivAutoSSID input").val():$("#ConfigDivManualSSID input").val();
 					var pass = $("#ConfidDivPass input").val();
+					var IP = "";
+					var NM = "";
+					var GW = "";
+					if(!$("#ConfigCheckDHCP").prop("checked")){
+						IP = $("#ConfigInputIP").val();
+						NM = $("#ConfigInputNM").val();
+						GW = $("#ConfigInputGW").val();
+					}
+					
 					$.ajax({
-						url: "http://192.168.4.1/confInicial",
+						url: "http://192.168.0.70/confInicial",
 						dataType: 'json',
-						data: {ssid:ssid, pass:pass},
+						data: {ssid:ssid, pass:pass, ip: IP, nm:NM, gw:GW},
 						success: function(data){
 							if(data[0].IP!=""){
 								$("#ConfigInputIP").val(data[0].IP);
 								$("#ConfigInputNM").val(data[0].NM);
 								$("#ConfigInputGW").val(data[0].GW);
-								/*$("#ConfigDivNetwork :input").prop("disabled", true);
-								$("#ConfigDivStatic :input").prop("disabled", true);
-								$("#ConfigDivStatic").show("fast");
-								$("#ConfigLinkWifi").addClass("disabled");
+								$("#ConfigDivNetwork :input").prop("disabled", true);
+								$("#ConfigDivStatic").show();
+								/*$("#ConfigLinkWifi").addClass("disabled");
 								$("#ConfigLinkNext").removeClass("disabled");
 								$("#ConfigImgRadio").hide();
 								$("#InputLinkRefresh").addClass("disabled");*/
@@ -258,7 +266,7 @@
 
 		function cargarRedes(){
 			$.ajax({
-				url: "http://192.168.4.1/redes",
+				url: "http://192.168.0.70/redes",
 				dataType: 'json',
 				success: function(data){
 					var icon;
