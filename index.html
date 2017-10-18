@@ -1,0 +1,281 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="theme-color" content="#4db6ac">
+	<title>Configuración Inicial</title>
+	<link rel="stylesheet" href="css/materialize.min.css">
+	<link href="css/icon.css" rel="stylesheet">
+	<style>
+	body {
+		cursor:default;
+		-moz-user-select: -moz-none;
+		-khtml-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+
+	*:focus {
+		outline:none !important;
+	}
+	
+	.hid{
+		display: none;
+	}
+
+	.container{
+		padding-top: 20px;
+	}
+</style>
+<script src="js/jquery.js"></script>
+<script src="js/materialize.min.js"></script>
+</head>
+<body>
+	<nav>
+		<div class="nav-wrapper teal lighten-2">
+			<a href="#" class="brand-logo center truncate">Configuración Inicial</a>
+		</div>
+	</nav>
+	<div class="container">
+		<div class="row">
+			<div class="switch col s12 m12 l4 xl4 center-align">
+				<p>Tipo de Busqueda Wifi</p>
+				<div class="switch">
+					<label>Manual<input id="ConfigCheckAutoSSID" checked type="checkbox"><span class="lever"></span>Automatica</label>
+				</div>
+			</div>
+			<div id="ConfigDivAutoSSID" class="input-field col s10 m10 l3 xl3">
+				<i class="material-icons prefix">wifi</i>
+				<select id="ConfigSelectSSID">
+					<option value="" disabled selected>Buscando Redes...</option>
+				</select>
+				<label>Red Wifi</label>
+			</div>
+			<div id="ConfigDivRefreshSSID" class="input-field col s2 m2 l1 x1">
+				<a id="ConfigButtonRefreshSSID" class="btn-floating pulse z-depth-5"><i class="material-icons">autorenew</i></a>
+			</div>
+			<div id="ConfigDivManualSSID" class="input-field col s12 m12 l4 xl4 hid">
+				<i class="material-icons prefix">wifi</i>
+				<input type="text" class="validate" required>
+				<label>Red Wifi</label>
+			</div>
+			<div id="ConfidDivPass" class="input-field col s12 m12 l4 xl4 center-align">
+				<i class="material-icons prefix">vpn_key</i>
+				<input type="password" class="validate" required minlength="8">
+				<label>Clave</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col s12 m12 l12 xl12 center-align">
+				<input type="checkbox" id="ConfigCheckDHCP" checked>
+				<label for="ConfigCheckDHCP">Obtener parametros de red automaticamente</label>
+			</div>
+		</div>
+		<div class="row hid" id="ConfigDivStatic">
+			<div class="input-field col s12 m4 l4 xl4">
+				<i class="material-icons prefix">settings_ethernet</i>
+				<input type="text" id="ConfigInputIP" pattern="(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)_*(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)_*){3}" class="validate" required>
+				<label>Ip</label>
+			</div>
+			<div class="input-field col s12 m4 l4 xl4">
+				<i class="material-icons prefix">settings_ethernet</i>
+				<input type="text" id="ConfigInputNM" pattern="(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)_*(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)_*){3}" class="validate" required>
+				<label>Mascara de Subred</label>
+			</div>
+			<div class="input-field col s12 m4 l4 xl4">
+				<i class="material-icons prefix">settings_ethernet</i>
+				<input type="text" id="ConfigInputGW" pattern="(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)_*(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)_*){3}" class="validate" required>
+				<label>Puerta de Enlace</label>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="input-field col s12 m6">
+				<i class="material-icons prefix">cloud_queue</i>
+				<input id="ConfigInputServer" type="text" class="validate" requied pattern="((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)_*(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)_*){3}|(http[s]?:\/\/)?[^\s([<,>]*\.[^\s[,><]*)">
+				<label for="ConfigInputServer">Servidor</label>
+			</div>
+			<div class="input-field col s12 m6">
+				<i class="material-icons prefix">device_hub</i>
+				<input id="ConfigInputPort" type="number" class="validate" min="0" max="65535" requied>
+				<label for="ConfigInputPort">Puerto</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s12 m4">
+				<i class="material-icons prefix">person</i>
+				<input id="ConfigInputUser" type="text">
+				<label for="ConfigInputUser">Usuario</label>
+			</div>
+			<div class="input-field col s12 m4">
+				<i class="material-icons prefix">vpn_key</i>
+				<input id="ConfigInputKey" type="password">
+				<label for="ConfigInputKey">Clave</label>
+			</div><br>
+			<div class="col s12 m4 center-align">
+				<input type="checkbox" id="ConfigInputSSL" />
+				<label for="ConfigInputSSL">Certificado SSL/TSL</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col s12 m12 input-field">
+				<i class="material-icons prefix">directions</i>
+				<input id="ConfigInputTopic" type="text" class="validate" pattern="\w+(\/\w+)*">
+				<label for="ConfigInputTopic">Topico de Mensaje</label>
+			</div>
+		</div>
+		<div class="fixed-action-btn">
+			<a id="ConfigHelp" class="btn btn-floating btn-large teal"><i class="material-icons">help</i></a>
+		</div>
+		<div class="tap-target teal" data-activates="ConfigHelp">
+			<div class="tap-target-content">
+				<h5 class="white-text right">Configurando Wifi</h5>
+				<br><br>
+				<p class="white-text">
+					<br><br>
+					Puede seleccionar la red wifi a utilizar usando la busqueda automatica, o ingresando de forma manual el nombre.
+					<br>
+					Si lo desea puede utilizar <br> parametros de conexion personalizados.
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col s12 m12 l12 xl12 center-align">
+				<button id="ConfigButtonCheck" class="waves-effect waves-light btn"><i class="material-icons left">rss_feed</i>Comprobar Red</button>
+				<button class="waves-effect waves-light btn"><i class="material-icons left">navigate_next</i>Siguiente</button>
+				<button class="waves-effect waves-light btn"><i class="material-icons left">navigate_before</i>Anterior</button>
+				<button class="waves-effect waves-light btn"><i class="material-icons left">done</i>Salvar y Reiniciar</button>
+			</div>
+			<div class="col s12 m12 l12 xl12 center-align">
+				<img id="ConfigImgRadio" src="img/radio.svg" alt="Comprobando Red" class="">
+				<h5>Se ha guardado la configuracion en el dispositivo exitosamente.</h5>
+			</div>
+		</div>
+	</div>
+	<script>
+		$(document).ready(function() {
+			$('select').material_select();
+			
+			cargarRedes();
+
+			$(document).on('change', '#ConfigCheckAutoSSID', function(e) {
+				if($(this).prop("checked")){
+					$("#ConfigDivManualSSID").hide();
+					$("#ConfigDivAutoSSID").show();
+					$("#ConfigDivRefreshSSID").show();
+				}else{
+					$("#ConfigDivAutoSSID").hide();
+					$("#ConfigDivRefreshSSID").hide();
+					$("#ConfigDivManualSSID").show();
+				}
+			});
+
+			$(document).on('click', "#ConfigHelp", function() {
+				$('.tap-target').tapTarget('open');
+			});
+			
+			$(document).on('change', '#ConfigCheckDHCP', function(e) {
+				if($(this).prop("checked")){
+					$("#ConfigDivStatic").hide();
+				}else{
+					$("#ConfigDivStatic").show();
+				}
+			});
+
+			$(document).on("click", "#ConfigButtonCheck", function(){
+				if(checkNetworkConfig()){
+					//$("#ConfigImgRadio").show();
+					var ssid = ($("#ConfigCheckAutoSSID").prop("checked"))?$("#ConfigDivAutoSSID input").val():$("#ConfigDivManualSSID input").val();
+					var pass = $("#ConfidDivPass input").val();
+					$.ajax({
+						url: "http://192.168.0.70/confInicial",
+						dataType: 'json',
+						data: {ssid:ssid, pass:pass},
+						success: function(data){
+							if(data[0].IP!=""){
+								$("#ConfigInputIP").val(data[0].IP);
+								$("#ConfigInputNM").val(data[0].NM);
+								$("#ConfigInputGW").val(data[0].GW);
+								/*$("#ConfigDivNetwork :input").prop("disabled", true);
+								$("#ConfigDivStatic :input").prop("disabled", true);
+								$("#ConfigDivStatic").show("fast");
+								$("#ConfigLinkWifi").addClass("disabled");
+								$("#ConfigLinkNext").removeClass("disabled");
+								$("#ConfigImgRadio").hide();
+								$("#InputLinkRefresh").addClass("disabled");*/
+							}else{
+								//$("#ConfigImgRadio").hide();
+							}
+							
+						}
+					}).done(function(){
+						Materialize.updateTextFields();
+					});
+				}
+			});
+		});
+
+		function checkNetworkConfig(){
+			var complete = false;
+			if(!$("#ConfigCheckAutoSSID").prop("checked")){
+				$("#ConfigDivManualSSID input").focus().blur();
+				if($("#ConfigDivManualSSID input").hasClass("invalid")){
+					$("#ConfigDivManualSSID input").focus();
+					complete = false;
+					return false;
+				}
+				complete = true;
+			}
+
+			$("#ConfidDivPass input").focus().blur();
+			if($("#ConfidDivPass input").hasClass("invalid")){
+				$("#ConfidDivPass input").focus();
+				complete = false;
+				return false;
+			}
+			complete = true;
+
+			if(!$("#ConfigCheckDHCP").prop("checked")){
+				$("#ConfigDivStatic :input").each(function(i,e){
+					$(this).focus().blur();
+					if($(this).hasClass("invalid")){
+						$(this).focus();
+						complete = false;
+						return false;
+					}
+					complete = true;
+				});
+			}else{
+				complete = true;
+			}
+			return complete;
+		}
+
+		function cargarRedes(){
+			$.ajax({
+				url: "http://192.168.0.70/redes",
+				dataType: 'json',
+				success: function(data){
+					var icon;
+					$("#ConfigSelectSSID").html("");
+					$.each(data.Redes, function(i, red){
+						icon = (red.RSSI>-60)?"1":(red.RSSI>-70)?"2":(red.RSSI>-80)?"3":"4";
+						$("#ConfigSelectSSID").append("<option data-icon=\"img/"+icon+".png\" class=\"right circle\">"+red.SSID+"</option>");
+					});
+					Materialize.toast('Redes obtenidas', 4000)
+				}
+			}).done(function(){
+				$("#ConfigLinkWifi").removeClass("disabled");
+				$('select').material_select();
+			}).always(function(){
+				$("#ConfigButtonRefreshSSID").removeClass("disabled");
+			});
+		}
+	</script>
+</body>
+</html>
