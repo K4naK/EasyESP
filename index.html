@@ -193,7 +193,7 @@
 					var ssid = ($("#ConfigCheckAutoSSID").prop("checked"))?$("#ConfigDivAutoSSID input").val():$("#ConfigDivManualSSID input").val();
 					var pass = $("#ConfidDivPass input").val();
 					$.ajax({
-						url: "http://192.168.0.70/confInicial",
+						url: "http://192.168.4.1/confInicial",
 						dataType: 'json',
 						data: {ssid:ssid, pass:pass},
 						success: function(data){
