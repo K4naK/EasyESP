@@ -54,7 +54,7 @@
 				<label>Red Wifi</label>
 			</div>
 			<div id="ConfigDivRefreshSSID" class="input-field col s2 m2 l1 x1">
-				<a id="ConfigButtonRefreshSSID" class="btn-floating pulse z-depth-5"><i class="material-icons">autorenew</i></a>
+				<a id="ConfigButtonRefresh" class="btn-floating pulse z-depth-5"><i class="material-icons">autorenew</i></a>
 			</div>
 			<div id="ConfigDivManualSSID" class="input-field col s12 m12 l4 xl4 hid">
 				<i class="material-icons prefix">wifi</i>
@@ -91,7 +91,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="container">
+	<div class="container hid">
 		<div class="row">
 			<div class="input-field col s12 m6">
 				<i class="material-icons prefix">cloud_queue</i>
@@ -127,33 +127,18 @@
 				<label for="ConfigInputTopic">Topico de Mensaje</label>
 			</div>
 		</div>
-		<div class="fixed-action-btn">
-			<a id="ConfigHelp" class="btn btn-floating btn-large teal"><i class="material-icons">help</i></a>
-		</div>
-		<div class="tap-target teal" data-activates="ConfigHelp">
-			<div class="tap-target-content">
-				<h5 class="white-text right">Configurando Wifi</h5>
-				<br><br>
-				<p class="white-text">
-					<br><br>
-					Puede seleccionar la red wifi a utilizar usando la busqueda automatica, o ingresando de forma manual el nombre.
-					<br>
-					Si lo desea puede utilizar <br> parametros de conexion personalizados.
-				</p>
-			</div>
-		</div>
 	</div>
 	<div class="container">
 		<div class="row">
 			<div class="col s12 m12 l12 xl12 center-align">
 				<button id="ConfigButtonCheck" class="waves-effect waves-light btn"><i class="material-icons left">rss_feed</i>Comprobar Red</button>
-				<button class="waves-effect waves-light btn"><i class="material-icons left">navigate_next</i>Siguiente</button>
-				<button class="waves-effect waves-light btn"><i class="material-icons left">navigate_before</i>Anterior</button>
-				<button class="waves-effect waves-light btn"><i class="material-icons left">done</i>Salvar y Reiniciar</button>
+				<button id="ConfigButtonNext" class="waves-effect waves-light btn disabled"><i class="material-icons left">navigate_next</i>Siguiente</button>
+				<button id="ConfigButtonPrev" class="waves-effect waves-light btn hid"><i class="material-icons left">navigate_before</i>Anterior</button>
+				<button id="ConfigButtonSave" class="waves-effect waves-light btn hid"><i class="material-icons left">done</i>Salvar y Reiniciar</button>
 			</div>
 			<div class="col s12 m12 l12 xl12 center-align">
-				<img id="ConfigImgRadio" src="img/radio.svg" alt="Comprobando Red" class="">
-				<h5>Se ha guardado la configuracion en el dispositivo exitosamente.</h5>
+				<img id="ConfigImgRadio" src="img/radio.svg" alt="Comprobando Red" class="hid">
+				<h5 class="hid">Se ha guardado la configuracion en el dispositivo exitosamente.</h5>
 			</div>
 		</div>
 	</div>
@@ -162,6 +147,10 @@
 			$('select').material_select();
 			
 			cargarRedes();
+
+			$(document).on('click', '#ConfigButtonRefresh', function() {
+				cargarRedes();
+			});
 
 			$(document).on('change', '#ConfigCheckAutoSSID', function(e) {
 				if($(this).prop("checked")){
@@ -174,10 +163,6 @@
 					$("#ConfigDivManualSSID").show();
 				}
 			});
-
-			$(document).on('click', "#ConfigHelp", function() {
-				$('.tap-target').tapTarget('open');
-			});
 			
 			$(document).on('change', '#ConfigCheckDHCP', function(e) {
 				if($(this).prop("checked")){
@@ -189,7 +174,7 @@
 
 			$(document).on("click", "#ConfigButtonCheck", function(){
 				if(checkNetworkConfig()){
-					//$("#ConfigImgRadio").show();
+					$("#ConfigImgRadio").show();
 					var ssid = ($("#ConfigCheckAutoSSID").prop("checked"))?$("#ConfigDivAutoSSID input").val():$("#ConfigDivManualSSID input").val();
 					var pass = $("#ConfidDivPass input").val();
 					var IP = "";
@@ -202,7 +187,7 @@
 					}
 					
 					$.ajax({
-						url: "http://192.168.4.1/confInicial",
+						url: "http://192.168.0.70/confInicial",
 						dataType: 'json',
 						data: {ssid:ssid, pass:pass, ip: IP, nm:NM, gw:GW},
 						success: function(data){
@@ -212,12 +197,12 @@
 								$("#ConfigInputGW").val(data[0].GW);
 								$("#ConfigDivNetwork :input").prop("disabled", true);
 								$("#ConfigDivStatic").show();
-								/*$("#ConfigLinkWifi").addClass("disabled");
-								$("#ConfigLinkNext").removeClass("disabled");
+								$("#ConfigButtonCheck").addClass("disabled");
+								$("#ConfigButtonNext").removeClass("disabled");
 								$("#ConfigImgRadio").hide();
-								$("#InputLinkRefresh").addClass("disabled");*/
+								$("#InputLinkRefresh").addClass("disabled");
 							}else{
-								//$("#ConfigImgRadio").hide();
+								$("#ConfigImgRadio").hide();
 							}
 							
 						}
@@ -266,8 +251,11 @@
 
 		function cargarRedes(){
 			$.ajax({
-				url: "http://192.168.4.1/redes",
+				url: "http://192.168.0.70/redes",
 				dataType: 'json',
+				before: function(){
+					$("#ConfigButtonRefresh").addClass("disabled");
+				},
 				success: function(data){
 					var icon;
 					$("#ConfigSelectSSID").html("");
@@ -275,14 +263,18 @@
 						icon = (red.RSSI>-60)?"1":(red.RSSI>-70)?"2":(red.RSSI>-80)?"3":"4";
 						$("#ConfigSelectSSID").append("<option data-icon=\"img/"+icon+".png\" class=\"right circle\">"+red.SSID+"</option>");
 					});
-					Materialize.toast('Redes obtenidas', 4000)
+					toast("Redes Cargadas", 4000);
 				}
 			}).done(function(){
 				$("#ConfigLinkWifi").removeClass("disabled");
 				$('select').material_select();
 			}).always(function(){
-				$("#ConfigButtonRefreshSSID").removeClass("disabled");
+				$("#ConfigButtonRefresh").removeClass("disabled");
 			});
+		}
+
+		function toast(msj, time){
+			Materialize.toast(msj,time);
 		}
 	</script>
 </body>
