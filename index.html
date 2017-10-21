@@ -28,6 +28,17 @@
 	.container{
 		padding-top: 20px;
 	}
+
+	div.overlay {
+		opacity:    0.5; 
+		background: #000; 
+		width:      100%;
+		height:     100%; 
+		z-index:    10;
+		top:        0; 
+		left:       0; 
+		position:   fixed; 
+	}
 </style>
 <script src="js/jquery.js"></script>
 <script src="js/materialize.min.js"></script>
@@ -38,7 +49,54 @@
 			<a href="#" class="brand-logo center truncate">Configuración Inicial</a>
 		</div>
 	</nav>
-	<div class="container" id="ConfigDivNetwork">
+	<div class="overlay valign-wrapper hid">
+		<div class="row">
+			<div class="col s12 m12 l12 xl12">
+				<div class="preloader-wrapper big active">
+					<div class="spinner-layer spinner-blue">
+						<div class="circle-clipper left">
+							<div class="circle"></div>
+						</div><div class="gap-patch">
+							<div class="circle"></div>
+						</div><div class="circle-clipper right">
+							<div class="circle"></div>
+						</div>
+					</div>
+
+					<div class="spinner-layer spinner-red">
+						<div class="circle-clipper left">
+							<div class="circle"></div>
+						</div><div class="gap-patch">
+							<div class="circle"></div>
+						</div><div class="circle-clipper right">
+							<div class="circle"></div>
+						</div>
+					</div>
+
+					<div class="spinner-layer spinner-yellow">
+						<div class="circle-clipper left">
+							<div class="circle"></div>
+						</div><div class="gap-patch">
+							<div class="circle"></div>
+						</div><div class="circle-clipper right">
+							<div class="circle"></div>
+						</div>
+					</div>
+
+					<div class="spinner-layer spinner-green">
+						<div class="circle-clipper left">
+							<div class="circle"></div>
+						</div><div class="gap-patch">
+							<div class="circle"></div>
+						</div><div class="circle-clipper right">
+							<div class="circle"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container configNetwork" id="ConfigDivNetwork">
 		<div class="row">
 			<div class="switch col s12 m12 l4 xl4 center-align">
 				<p>Tipo de Busqueda Wifi</p>
@@ -49,12 +107,12 @@
 			<div id="ConfigDivAutoSSID" class="input-field col s10 m10 l3 xl3">
 				<i class="material-icons prefix">wifi</i>
 				<select id="ConfigSelectSSID">
-					<option value="" disabled selected>Buscando Redes...</option>
+					
 				</select>
 				<label>Red Wifi</label>
 			</div>
 			<div id="ConfigDivRefreshSSID" class="input-field col s2 m2 l1 x1">
-				<a id="ConfigButtonRefresh" class="btn-floating pulse z-depth-5"><i class="material-icons">autorenew</i></a>
+				<a id="ConfigButtonRefresh" class="btn-floating z-depth-5"><i class="material-icons">autorenew</i></a>
 			</div>
 			<div id="ConfigDivManualSSID" class="input-field col s12 m12 l4 xl4 hid">
 				<i class="material-icons prefix">wifi</i>
@@ -63,7 +121,7 @@
 			</div>
 			<div id="ConfidDivPass" class="input-field col s12 m12 l4 xl4 center-align">
 				<i class="material-icons prefix">vpn_key</i>
-				<input type="password" class="validate" required minlength="8">
+				<input type="text" class="validate" required minlength="8">
 				<label>Clave</label>
 			</div>
 		</div>
@@ -91,11 +149,11 @@
 			</div>
 		</div>
 	</div>
-	<div class="container hid">
+	<div class="container configServer hid" id="ConfigDivServer">
 		<div class="row">
 			<div class="input-field col s12 m6">
-				<i class="material-icons prefix">cloud_queue</i>
-				<input id="ConfigInputServer" type="text" class="validate" requied pattern="((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)_*(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)_*){3}|(http[s]?:\/\/)?[^\s([<,>]*\.[^\s[,><]*)">
+				<i class="material-icons prefix">cloud</i>
+				<input id="ConfigInputServer" type="text" class="validate" requied pattern="^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$">
 				<label for="ConfigInputServer">Servidor</label>
 			</div>
 			<div class="input-field col s12 m6">
@@ -114,38 +172,33 @@
 				<i class="material-icons prefix">vpn_key</i>
 				<input id="ConfigInputKey" type="password">
 				<label for="ConfigInputKey">Clave</label>
-			</div><br>
-			<div class="col s12 m4 center-align">
-				<input type="checkbox" id="ConfigInputSSL" />
-				<label for="ConfigInputSSL">Certificado SSL/TSL</label>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col s12 m12 input-field">
+			<div class="input-field col s12 m4 ">
 				<i class="material-icons prefix">directions</i>
-				<input id="ConfigInputTopic" type="text" class="validate" pattern="\w+(\/\w+)*">
+				<input id="ConfigInputTopic" type="text" class="validate" pattern="\w+(\/\w+)*" required placeholder="Casa/Piso1/Dormitorio">
 				<label for="ConfigInputTopic">Topico de Mensaje</label>
 			</div>
 		</div>
 	</div>
 	<div class="container">
 		<div class="row">
-			<div class="col s12 m12 l12 xl12 center-align">
+			<div class="col s12 m12 l12 xl12 center-align configNetwork">
 				<button id="ConfigButtonCheck" class="waves-effect waves-light btn"><i class="material-icons left">rss_feed</i>Comprobar Red</button>
-				<button id="ConfigButtonNext" class="waves-effect waves-light btn disabled"><i class="material-icons left">navigate_next</i>Siguiente</button>
-				<button id="ConfigButtonPrev" class="waves-effect waves-light btn hid"><i class="material-icons left">navigate_before</i>Anterior</button>
-				<button id="ConfigButtonSave" class="waves-effect waves-light btn hid"><i class="material-icons left">done</i>Salvar y Reiniciar</button>
+				<button id="ConfigButtonNext" class="waves-effect waves-light btn disabled" disabled><i class="material-icons left">navigate_next</i>Siguiente</button>
+			</div>
+			<div class="col s12 m12 l12 xl12 center-align configServer hid">
+				<button id="ConfigButtonPrev" class="waves-effect waves-light btn"><i class="material-icons left">navigate_before</i>Anterior</button>
+				<button id="ConfigButtonSave" class="waves-effect waves-light btn"><i class="material-icons left">done</i>Salvar y Reiniciar</button>
 			</div>
 			<div class="col s12 m12 l12 xl12 center-align">
-				<img id="ConfigImgRadio" src="img/radio.svg" alt="Comprobando Red" class="hid">
 				<h5 class="hid">Se ha guardado la configuracion en el dispositivo exitosamente.</h5>
 			</div>
 		</div>
 	</div>
 	<script>
 		$(document).ready(function() {
-			$('select').material_select();
-			
+			device = "192.168.0.39";
+
 			cargarRedes();
 
 			$(document).on('click', '#ConfigButtonRefresh', function() {
@@ -173,45 +226,73 @@
 			});
 
 			$(document).on("click", "#ConfigButtonCheck", function(){
-				if(checkNetworkConfig()){
-					$("#ConfigImgRadio").show();
-					var ssid = ($("#ConfigCheckAutoSSID").prop("checked"))?$("#ConfigDivAutoSSID input").val():$("#ConfigDivManualSSID input").val();
-					var pass = $("#ConfidDivPass input").val();
-					var IP = "";
-					var NM = "";
-					var GW = "";
-					if(!$("#ConfigCheckDHCP").prop("checked")){
-						IP = $("#ConfigInputIP").val();
-						NM = $("#ConfigInputNM").val();
-						GW = $("#ConfigInputGW").val();
-					}
-					
-					$.ajax({
-						url: "http://192.168.4.1/confInicial",
-						dataType: 'json',
-						data: {ssid:ssid, pass:pass, ip: IP, nm:NM, gw:GW},
-						success: function(data){
-							if(data[0].IP!=""){
-								$("#ConfigInputIP").val(data[0].IP);
-								$("#ConfigInputNM").val(data[0].NM);
-								$("#ConfigInputGW").val(data[0].GW);
-								$("#ConfigDivNetwork :input").prop("disabled", true);
-								$("#ConfigDivStatic").show();
-								$("#ConfigButtonCheck").addClass("disabled");
-								$("#ConfigButtonNext").removeClass("disabled");
-								$("#ConfigImgRadio").hide();
-								$("#InputLinkRefresh").addClass("disabled");
-							}else{
-								$("#ConfigImgRadio").hide();
-							}
-							
-						}
-					}).done(function(){
-						Materialize.updateTextFields();
-					});
-				}
+				checkNetworking();
+			});
+
+			$(document).on("click", "#ConfigButtonSave", function(){
+				checkServer();
+			});
+
+			$(document).on("click", "#ConfigButtonNext", function(){
+				cambioForm(".configNetwork",".configServer");
+			});
+
+			$(document).on("click", "#ConfigButtonPrev", function(){
+				cambioForm(".configServer", ".configNetwork");
 			});
 		});
+
+		function cambioForm(hide,show){
+			$(hide).hide("slow");
+			$(show).show("slow");
+		}
+
+		function checkNetworking(){
+			if(checkNetworkConfig()){
+				var ssid = ($("#ConfigCheckAutoSSID").prop("checked"))?$("#ConfigDivAutoSSID input").val():$("#ConfigDivManualSSID input").val();
+				var pass = $("#ConfidDivPass input").val();
+				var IP = "";
+				var NM = "";
+				var GW = "";
+				if(!$("#ConfigCheckDHCP").prop("checked")){
+					IP = $("#ConfigInputIP").val();
+					NM = $("#ConfigInputNM").val();
+					GW = $("#ConfigInputGW").val();
+				}
+
+				$.ajax({
+					url: "http://"+device+"/confInicial",
+					dataType: 'json',
+					data: {ssid:ssid, pass:pass, ip: IP, nm:NM, gw:GW},
+					beforeSend: function(){
+						$(".overlay").removeClass('hid');
+					},
+					success: function(data){
+						if(data[0].IP!=""){
+							$("#ConfigInputIP").val(data[0].IP);
+							$("#ConfigInputNM").val(data[0].NM);
+							$("#ConfigInputGW").val(data[0].GW);
+							$("#ConfigDivNetwork :input").prop("disabled", true);
+							$("#ConfigDivStatic").show();
+							$("#ConfigButtonCheck").addClass("disabled");
+							$("#ConfigButtonCheck").prop("disabled",true);
+							$("#ConfigButtonNext").removeClass("disabled");
+							$("#ConfigButtonNext").prop("disabled",false);
+							$("#InputLinkRefresh").addClass("disabled");
+							$("#InputLinkRefresh").prop("disabled",true);
+							toast("Dispositivo configurado exitosamente", 3000);
+						}else{
+							toast("Error al configurar dispositivo", 3000);
+						}
+
+					}
+				}).fail(function(){
+					toast("Error al enviar configuracion", 3000);
+				}).always(function(){
+					$(".overlay").addClass("hid");
+				});
+			}
+		}
 
 		function checkNetworkConfig(){
 			var complete = false;
@@ -219,6 +300,13 @@
 				$("#ConfigDivManualSSID input").focus().blur();
 				if($("#ConfigDivManualSSID input").hasClass("invalid")){
 					$("#ConfigDivManualSSID input").focus();
+					complete = false;
+					return false;
+				}
+				complete = true;
+			}else{
+				if($("#ConfigDivAutoSSID input").val() == "Buscando Redes..."){
+					toast("Sin red automatica seleccionada", 3000);
 					complete = false;
 					return false;
 				}
@@ -249,12 +337,74 @@
 			return complete;
 		}
 
+		function checkServer(){
+			if(checkServerConfig()){
+				var s = $("#ConfigInputServer").val();
+				var p = $("#ConfigInputPort").val();
+				var u = $("#ConfigInputUser").val();
+				var k = $("#ConfigInputKey").val();
+				var t = $("#ConfigInputTopic").val();
+
+				$.ajax({
+					url: "http://"+device+"/confServer",
+					data: {server:s, port:p, user: u, key:k, topic:t},
+					beforeSend: function(){
+						$(".overlay").removeClass('hid');
+					},
+					success: function(data){
+						if(data=="true"){
+							$("#ConfigDivServer :input").prop("disabled", true);
+							$("#ConfigButtonSave").addClass("disabled");
+							$("#ConfigButtonSave").prop("disabled",true);
+							toast("Configuracion Completa. El dispositivo se reiniciara en 5 segundos", 5000);
+						}
+					}
+				}).fail(function(){
+					toast("Error al enviar configuracion", 3000);
+				}).always(function(){
+					$(".overlay").addClass("hid");
+				});
+			}
+		}
+
+		function checkServerConfig(){
+			var complete = false;
+
+			$("#ConfigInputServer").focus().blur();
+			if($("#ConfigInputServer").hasClass("invalid") || $("#ConfigInputServer").val() == ""){
+				$("#ConfigInputServer").focus();
+				complete = false;
+				return false;
+			}
+			complete = true;
+
+			$("#ConfigInputPort").focus().blur();
+			if($("#ConfigInputPort").hasClass("invalid") || $("#ConfigInputPort").val() == ""){
+				$("#ConfigInputPort").focus();
+				complete = false;
+				return false;
+			}
+			complete = true;
+
+			$("#ConfigInputTopic").focus().blur();
+			if($("#ConfigInputTopic").hasClass("invalid") || $("#ConfigInputTopic").val() == ""){
+				$("#ConfigInputTopic").focus();
+				complete = false;
+				return false;
+			}
+			complete = true;
+
+			return complete;
+		}
+
 		function cargarRedes(){
 			$.ajax({
-				url: "http://192.168.4.1/redes",
+				url: "http://"+device+"/redes",
 				dataType: 'json',
-				before: function(){
-					$("#ConfigButtonRefresh").addClass("disabled");
+				beforeSend: function(){
+					$("#ConfigSelectSSID").html('<option value="0" disabled selected>Buscando Redes...</option>');
+					$("#ConfigButtonRefresh").addClass("disabled pulse");
+					$('select').material_select();
 				},
 				success: function(data){
 					var icon;
@@ -263,13 +413,15 @@
 						icon = (red.RSSI>-60)?"1":(red.RSSI>-70)?"2":(red.RSSI>-80)?"3":"4";
 						$("#ConfigSelectSSID").append("<option data-icon=\"img/"+icon+".png\" class=\"right circle\">"+red.SSID+"</option>");
 					});
-					toast("Redes Cargadas", 4000);
+					toast("Redes Cargadas", 3000);
 				}
 			}).done(function(){
 				$("#ConfigLinkWifi").removeClass("disabled");
 				$('select').material_select();
+			}).fail(function(){
+				toast("Error al obtener redes", 3000);
 			}).always(function(){
-				$("#ConfigButtonRefresh").removeClass("disabled");
+				$("#ConfigButtonRefresh").removeClass("disabled pulse");
 			});
 		}
 
